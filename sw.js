@@ -10,8 +10,13 @@ const FILES_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  '/site.webmanifest',
+  '/favicon.ico',
+  '/favicon-16x16.png',
+  '/favicon-32x32.png',
+  '/apple-touch-ico.png',
+  '/android-chrome-192x192.png',
+  '/android-chrome-512x512.png'
 ];
 
 // Установка Service Worker — кешируем файлы
@@ -75,7 +80,6 @@ self.addEventListener('fetch', (event) => {
           })
           .catch(() => {
             // Если нет сети и нет кеша — показываем страницу офлайн
-            // (можно сделать отдельную страницу offline.html)
             return new Response('Нет подключения к интернету', {
               status: 503,
               statusText: 'Service Unavailable'
@@ -85,13 +89,13 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// Обработка push-уведомлений (если понадобятся позже)
+// Обработка push-уведомлений
 self.addEventListener('push', (event) => {
   const data = event.data ? event.data.text() : 'Напоминание!';
   const options = {
     body: data,
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png',
+    icon: '/android-chrome-192x192.png',
+    badge: '/android-chrome-192x192.png',
     vibrate: [200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
