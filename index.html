@@ -42,22 +42,6 @@
             --grad-a: #3b5fe0;
             --grad-b: #6d4ce8;
         }
-        html[data-color="gray"] {
-            --accent: #4b5566;
-            --accent2: #2c3340;
-            --accent-soft: #eef0f3;
-            --bg: #f6f7f8;
-            --surface: #ffffff;
-            --surface2: #f1f2f4;
-            --border: #e5e7eb;
-            --text: #14161a;
-            --text2: #686d76;
-            --text3: #a3a8b0;
-            --shadow: 0 1px 2px rgba(20, 22, 26, .04);
-            --shadow-md: 0 8px 28px rgba(75, 85, 102, .1);
-            --grad-a: #4b5566;
-            --grad-b: #1f242e;
-        }
         html[data-color="violet"] {
             --accent: #7c3aed;
             --accent2: #b026d8;
@@ -206,22 +190,6 @@
             --shadow-md: 0 8px 28px rgba(0, 0, 0, .45);
             --grad-a: #3b5fe0;
             --grad-b: #6d4ce8;
-        }
-        html.dark[data-color="gray"] {
-            --accent: #9aa3b5;
-            --accent2: #6b7385;
-            --accent-soft: #1b1d22;
-            --bg: #09090b;
-            --surface: #101113;
-            --surface2: #17181b;
-            --border: #23252a;
-            --text: #eef0f2;
-            --text2: #9aa0a8;
-            --text3: #45484f;
-            --shadow: 0 1px 2px rgba(0, 0, 0, .3);
-            --shadow-md: 0 8px 28px rgba(0, 0, 0, .5);
-            --grad-a: #4b5566;
-            --grad-b: #21252e;
         }
         html.dark[data-color="violet"] {
             --accent: #b083fb;
@@ -705,6 +673,65 @@
             margin-top: 6px;
             position: relative;
         }
+        .greeting-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+        }
+        .greeting-left { flex: 1; min-width: 0; }
+        .weather-widget {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            flex-shrink: 0;
+            min-width: 52px;
+            cursor: pointer;
+        }
+        .weather-widget svg {
+            width: 28px;
+            height: 28px;
+            opacity: .95;
+        }
+        .weather-temp {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+        .weather-desc {
+            font-size: 10px;
+            opacity: .75;
+            text-align: center;
+            line-height: 1.3;
+            max-width: 56px;
+        }
+        .weather-city {
+            font-size: 9.5px;
+            opacity: .6;
+            text-align: center;
+        }
+        .weather-loading {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            height: 28px;
+        }
+        .weather-loading span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.7);
+            animation: wDot .9s infinite ease-in-out;
+        }
+        .weather-loading span:nth-child(2) { animation-delay: .15s; }
+        .weather-loading span:nth-child(3) { animation-delay: .3s; }
+        @keyframes wDot {
+            0%, 80%, 100% { transform: scale(.6); opacity: .3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
 
         /* ============================================================
            СТАТИСТИКА
@@ -1093,6 +1120,248 @@
             color: var(--accent);
             background: var(--accent-soft);
         }
+
+        /* ============================================================
+           АНИМАЦИЯ ПЕРЕХОДОВ МЕЖДУ СТРАНИЦАМИ
+           ============================================================ */
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .page-anim {
+            animation: pageIn .22s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ============================================================
+           ПРИОРИТЕТЫ ЗАДАЧ
+           ============================================================ */
+        .priority-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all .15s;
+            padding: 0;
+        }
+        .priority-btn svg {
+            width: 15px;
+            height: 15px;
+            stroke: var(--text3);
+            fill: none;
+            transition: all .15s;
+        }
+        .priority-btn.high svg {
+            stroke: #ef4444;
+            fill: #ef4444;
+        }
+        .priority-btn.medium svg {
+            stroke: #f59e0b;
+            fill: #f59e0b;
+        }
+        .task-item.priority-high {
+            border-left: 3px solid #ef4444;
+        }
+        .task-item.priority-medium {
+            border-left: 3px solid #f59e0b;
+        }
+        .task-filter-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .task-filter-pill {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            color: var(--text2);
+            transition: all .15s;
+        }
+        .task-filter-pill.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        /* ============================================================
+           ВРЕМЕННАЯ ШКАЛА В ПЛАНЕРЕ
+           ============================================================ */
+        .timeline-wrap {
+            padding: 4px 0 6px;
+        }
+        .timeline-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            position: relative;
+            padding: 5px 14px;
+            min-height: 40px;
+        }
+        .timeline-hour {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text3);
+            width: 34px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 48px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border);
+        }
+        .timeline-events {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .timeline-event {
+            padding: 6px 10px;
+            border-radius: var(--radius-xs);
+            font-size: 13px;
+            font-weight: 500;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .timeline-now {
+            position: absolute;
+            left: 44px;
+            right: 14px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+            z-index: 2;
+        }
+        .timeline-now::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            position: absolute;
+            left: -3px;
+            top: -2.5px;
+        }
+        .tl-tab-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .tl-tab {
+            flex: 1;
+            padding: 9px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            background: var(--surface2);
+            color: var(--text2);
+            text-align: center;
+            transition: all .15s;
+        }
+        .tl-tab.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+        }
+
+        /* ============================================================
+           ПРИВЫЧКИ
+           ============================================================ */
+        .habit-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--surface2);
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border);
+            transition: all .2s;
+        }
+        .habit-card.done-today { border-color: var(--accent); background: var(--accent-soft); }
+        .habit-emoji { font-size: 26px; width: 40px; text-align: center; flex-shrink: 0; }
+        .habit-info { flex: 1; min-width: 0; }
+        .habit-name { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .habit-streak { font-size: 12px; color: var(--text2); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+        .habit-streak-num { font-weight: 700; color: var(--accent); }
+        .habit-check {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 2px solid var(--border); background: var(--surface);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; flex-shrink: 0; transition: all .2s;
+        }
+        .habit-check.done { background: var(--accent); border-color: var(--accent); }
+        .habit-check svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2.5; fill: none; }
+        .habit-check:not(.done) svg { display: none; }
+        .habit-week { display: flex; gap: 4px; margin-top: 6px; }
+        .habit-day-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+        .habit-day-dot.done { background: var(--accent); }
+        .habit-day-dot.today { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+
+        /* ============================================================
+           FAB БЫСТРОГО ДОБАВЛЕНИЯ
+           ============================================================ */
+        .fab {
+            position: fixed; bottom: 86px; right: 16px;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--accent); color: #fff; border: none;
+            box-shadow: 0 3px 12px rgba(0,0,0,.22);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 90; transition: transform .15s, box-shadow .15s;
+        }
+        .fab:active { transform: scale(.9); }
+        .fab svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+        .quick-add-box {
+            background: var(--surface); width: 100%; max-width: 480px;
+            border-radius: 22px 22px 0 0; padding: 22px 22px 32px;
+            animation: slideUp .22s cubic-bezier(.4,0,.2,1);
+        }
+        .quick-add-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .quick-add-tile {
+            display: flex; flex-direction: column; align-items: center; gap: 9px;
+            padding: 18px 10px; border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border); background: var(--surface2);
+            cursor: pointer; transition: all .15s;
+            font-size: 13px; font-weight: 600; color: var(--text); font-family: inherit;
+        }
+        .quick-add-tile:active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+        .quick-add-tile svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .quick-add-inline { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; animation: pageIn .18s ease; }
+
+        /* повтор выполненной задачи */
+        .repeat-task-btn {
+            display: flex; align-items: center; gap: 5px;
+            padding: 4px 9px; border-radius: 20px; font-size: 11.5px; font-weight: 600;
+            color: var(--accent); background: var(--accent-soft); border: none;
+            cursor: pointer; flex-shrink: 0; white-space: nowrap; font-family: inherit;
+        }
+        .repeat-task-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* напоминания о событиях */
+        .reminder-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .reminder-pill {
+            padding: 7px 13px; border-radius: 20px; font-size: 12.5px; font-weight: 500;
+            cursor: pointer; border: 1px solid var(--border);
+            background: var(--surface2); color: var(--text2); transition: all .15s;
+        }
+        .reminder-pill.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 
         /* ============================================================
            НАСТРОЙКИ
@@ -1724,6 +1993,10 @@
                 </select>
             </div>
             <div>
+                <label>Напомнить</label>
+                <div class="reminder-pills" id="evReminderPills"></div>
+            </div>
+            <div>
                 <label>Цвет</label>
                 <div class="color-swatches" id="evColors"></div>
             </div>
@@ -1735,16 +2008,73 @@
     </div>
 
     <!-- ============================================================
+    FAB БЫСТРОГО ДОБАВЛЕНИЯ (показывается по state.quickAddEnabled)
+    ============================================================ -->
+    <button class="fab" id="fabBtn" onclick="openQuickAdd()" style="display:none" title="Быстрое добавление">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+
+    <!-- ============================================================
+    МОДАЛКА БЫСТРОГО ДОБАВЛЕНИЯ
+    ============================================================ -->
+    <div class="modal-overlay" id="quickAddModal">
+        <div class="quick-add-box">
+            <div class="modal-handle"></div>
+            <div style="font-size:17px;font-weight:700">Добавить</div>
+            <div id="quickAddContent">
+                <div class="quick-add-grid">
+                    <button class="quick-add-tile" onclick="quickAddShow('task')">
+                        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                        Задача
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('event')">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Событие
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('alarm')">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2M19 3l2 2"/></svg>
+                        Будильник
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('habit')">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4.5 8-11.8A8 8 0 004 10c0 7.3 8 12 8 12z"/></svg>
+                        Привычка
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    МОДАЛКА ПРИВЫЧКИ
+    ============================================================ -->
+    <div class="modal-overlay" id="habitModal">
+        <div class="modal-box space-y-4">
+            <div class="modal-handle"></div>
+            <h3 style="font-size:18px;font-weight:700" id="habitModalTitle">Новая привычка</h3>
+            <div>
+                <label>Эмодзи</label>
+                <input type="text" id="habitEmoji" placeholder="🏃" maxlength="2" style="font-size:24px;text-align:center">
+            </div>
+            <div>
+                <label>Название</label>
+                <input type="text" id="habitName" placeholder="Например: Зарядка, Вода, Чтение">
+            </div>
+            <div>
+                <label>Цвет</label>
+                <div class="color-swatches" id="habitColors"></div>
+            </div>
+            <div class="flex gap-3 mt-2">
+                <button class="btn btn-ghost w-full" onclick="closeHabitModal()">Отмена</button>
+                <button class="btn btn-primary w-full" onclick="saveHabit()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
     НАВИГАЦИЯ
     ============================================================ -->
     <nav>
         <div class="nav-inner">
-            <button class="nav-btn" data-page="today" onclick="goTo('today')">
-                <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                Сегодня
-            </button>
             <button class="nav-btn" data-page="planner" onclick="goTo('planner')">
                 <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <rect x="3" y="4" width="18" height="18" rx="3"/>
@@ -1753,6 +2083,18 @@
                     <line x1="3" y1="10" x2="21" y2="10"/>
                 </svg>
                 Планер
+            </button>
+            <button class="nav-btn" data-page="habits" onclick="goTo('habits')">
+                <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4.5 8-11.8A8 8 0 004 10c0 7.3 8 12 8 12z"/>
+                </svg>
+                Привычки
+            </button>
+            <button class="nav-btn" data-page="today" onclick="goTo('today')">
+                <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Сегодня
             </button>
             <button class="nav-btn" data-page="alarms" onclick="goTo('alarms')">
                 <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -1781,7 +2123,6 @@
         // ============================================================
         const THEMES = {
             blue: { label: 'Синий', swatchA: '#3b5fe0', swatchB: '#6d4ce8' },
-            gray: { label: 'Серый', swatchA: '#4b5566', swatchB: '#1f242e' },
             violet: { label: 'Фиолетовый', swatchA: '#7c3aed', swatchB: '#b026d8' },
             green: { label: 'Зелёный', swatchA: '#15924f', swatchB: '#0d8a7c' },
             brown: { label: 'Коричневый', swatchA: '#8a5a2b', swatchB: '#b3722f' },
@@ -1797,15 +2138,20 @@
         // ============================================================
         let state = {
             page: 'today',
-            userName: '', // ← пусто, пользователь вводит сам
+            userName: '',
             dark: false,
             color: 'blue',
-            tasks: [], // ← пусто, без предустановленных задач
+            tasks: [],
             events: [],
-            alarms: [], // ← пусто, без предустановленных будильников
+            alarms: [],
+            habits: [],
             calYear: new Date().getFullYear(),
             calMonth: new Date().getMonth(),
             evColor: '#4f6ef7',
+            taskFilter: 'all',
+            plannerView: 'list',
+            weather: null,
+            quickAddEnabled: true,
         };
 
         // ============================================================
@@ -1835,7 +2181,93 @@
         ];
 
         // ============================================================
-        // ВСТРОЕННЫЕ ЗВУКИ БУДИЛЬНИКА
+        // ПОГОДА — Open-Meteo API (бесплатно, без ключа)
+        // ============================================================
+        const WMO_ICON = {
+            0:'wClear', 1:'wClear', 2:'wPartly', 3:'wCloud',
+            45:'wFog', 48:'wFog',
+            51:'wRain', 53:'wRain', 55:'wRain',
+            61:'wRain', 63:'wRain', 65:'wRain',
+            71:'wSnow', 73:'wSnow', 75:'wSnow', 77:'wSnow',
+            80:'wRain', 81:'wRain', 82:'wRain',
+            85:'wSnow', 86:'wSnow',
+            95:'wStorm', 96:'wStorm', 99:'wStorm',
+        };
+        const WMO_DESC = {
+            0:'Ясно', 1:'Почти ясно', 2:'Переменная облачность', 3:'Пасмурно',
+            45:'Туман', 48:'Туман с изморозью',
+            51:'Морось', 53:'Умеренная морось', 55:'Сильная морось',
+            61:'Небольшой дождь', 63:'Умеренный дождь', 65:'Сильный дождь',
+            71:'Небольшой снег', 73:'Умеренный снег', 75:'Сильный снег', 77:'Снежная крупа',
+            80:'Ливень', 81:'Ливень', 82:'Сильный ливень',
+            85:'Снегопад', 86:'Снегопад',
+            95:'Гроза', 96:'Гроза с градом', 99:'Сильная гроза',
+        };
+
+        async function fetchWeather() {
+            try {
+                const pos = await new Promise((res, rej) =>
+                    navigator.geolocation.getCurrentPosition(res, rej, { timeout: 6000 }));
+                const { latitude: lat, longitude: lon } = pos.coords;
+
+                // Обратное геокодирование — название города
+                const geoResp = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=ru`,
+                    { headers: { 'Accept-Language': 'ru' } }
+                );
+                const geoData = await geoResp.json();
+                const city = geoData.address?.city || geoData.address?.town ||
+                             geoData.address?.village || geoData.address?.county || '';
+
+                // Погода через Open-Meteo (бесплатно, без ключа)
+                const wResp = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+                    `&current=temperature_2m,weathercode&wind_speed_unit=ms&forecast_days=1`
+                );
+                const wData = await wResp.json();
+                const temp = Math.round(wData.current.temperature_2m);
+                const code = wData.current.weathercode;
+                const now = new Date();
+                const isNight = now.getHours() < 6 || now.getHours() >= 21;
+
+                state.weather = {
+                    temp,
+                    desc: WMO_DESC[code] || 'Неизвестно',
+                    icon: isNight && code === 0 ? 'wNight' : (WMO_ICON[code] || 'wCloud'),
+                    city,
+                };
+                updateWeatherWidget();
+            } catch (e) {
+                state.weather = 'error';
+                updateWeatherWidget();
+            }
+        }
+
+        function updateWeatherWidget() {
+            const el = document.getElementById('weatherWidget');
+            if (!el) return;
+            el.innerHTML = renderWeatherWidgetContent();
+        }
+
+        function weatherIconSvg(iconKey) {
+            return (ICONS[iconKey] || ICONS.wCloud).replace('<svg ', '<svg width="28" height="28" ');
+        }
+
+        function renderWeatherWidgetContent() {
+            if (!state.weather) {
+                return `<div class="weather-loading"><span></span><span></span><span></span></div>`;
+            }
+            if (state.weather === 'error') {
+                return `<div style="text-align:center;opacity:.6">${icon('pinOff')}<div style="font-size:9px;margin-top:3px">Нет данных</div></div>`;
+            }
+            const w = state.weather;
+            return `${weatherIconSvg(w.icon)}
+                <div class="weather-temp">${w.temp}°</div>
+                <div class="weather-desc">${esc(w.desc)}</div>
+                ${w.city ? `<div class="weather-city">${esc(w.city)}</div>` : ''}`;
+        }
+
+
         // Браузер не даёт доступ к системным рингтонам устройства —
         // такого API не существует ни в одном браузере. Поэтому здесь
         // несколько готовых мелодий, синтезированных через Web Audio,
@@ -1963,6 +2395,16 @@
             dots: '<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
             repeat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>',
             play: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg>',
+            flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>',
+            wClear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+            wCloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 000-9 6 6 0 00-11.4 1.5A4 4 0 007 19h10.5z"/></svg>',
+            wPartly: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M5.2 5.2l1.4 1.4"/><path d="M2 13h2"/><path d="M17.4 6.6l1.4-1.4"/><path d="M14.5 9.5A4 4 0 008 12"/><path d="M16 16a3 3 0 100-6 5 5 0 00-9.5 2A4 4 0 008 20h7a3 3 0 001-5.8"/></svg>',
+            wRain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 15.5a4.5 4.5 0 000-9 6 6 0 00-11.4 1.5A4 4 0 005.5 16h11z"/><line x1="8" y1="19" x2="8" y2="21"/><line x1="12" y1="19" x2="12" y2="21"/><line x1="16" y1="19" x2="16" y2="21"/></svg>',
+            wSnow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 13.5a4.5 4.5 0 000-9 6 6 0 00-11.4 1.5A4 4 0 005.5 14h11z"/><line x1="8" y1="19" x2="8.01" y2="19"/><line x1="12" y1="21" x2="12.01" y2="21"/><line x1="16" y1="19" x2="16.01" y2="19"/></svg>',
+            wStorm: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 14.5a4.5 4.5 0 000-9 6 6 0 00-11.4 1.5A4 4 0 005.5 15h11z"/><polyline points="13 13 10 19 14 19 11 23"/></svg>',
+            wFog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 11a4.5 4.5 0 00-8.9-1"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="5" y1="19" x2="19" y2="19"/></svg>',
+            wNight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>',
+            pinOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M17.6 17.6L12 23l-7-7 1.7-1.7"/><path d="M10.5 10.5L7 7l1-4 4 1 2.5 2.5"/><line x1="17" y1="7" x2="7" y2="17"/></svg>',
         };
 
         function icon(name, cls) {
@@ -1992,14 +2434,15 @@
                 if (s.tasks) state.tasks = s.tasks;
                 if (s.events) state.events = s.events;
                 if (s.alarms) state.alarms = s.alarms;
+                if (s.habits) state.habits = s.habits;
+                if (s.quickAddEnabled !== undefined) state.quickAddEnabled = s.quickAddEnabled;
             } catch (e) {}
-
-            // Если ничего не загрузилось — оставляем пустые массивы и пустое имя
             if (!state.userName) state.userName = '';
             if (!state.tasks) state.tasks = [];
             if (!state.events) state.events = [];
             if (!state.alarms) state.alarms = [];
-
+            if (!state.habits) state.habits = [];
+            if (!THEMES[state.color]) state.color = 'blue';
             applyTheme();
         }
 
@@ -2011,6 +2454,8 @@
                 tasks: state.tasks,
                 events: state.events,
                 alarms: state.alarms,
+                habits: state.habits,
+                quickAddEnabled: state.quickAddEnabled,
             }));
         }
 
@@ -2036,14 +2481,26 @@
         // 8. НАВИГАЦИЯ
         // ============================================================
         function goTo(page) {
+            const prev = state.page;
             state.page = page;
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === page));
             render();
+            // Trigger animation after DOM update
+            requestAnimationFrame(() => {
+                const app = document.getElementById('app');
+                if (app) {
+                    app.classList.remove('page-anim');
+                    void app.offsetWidth; // reflow
+                    app.classList.add('page-anim');
+                }
+            });
         }
 
         function render() {
             document.getElementById('app').innerHTML = renderPage();
             bindEvents();
+            const fab = document.getElementById('fabBtn');
+            if (fab) fab.style.display = state.quickAddEnabled ? 'flex' : 'none';
         }
 
         // ============================================================
@@ -2052,6 +2509,7 @@
         function renderPage() {
             if (state.page === 'today') return renderToday();
             if (state.page === 'planner') return renderPlanner();
+            if (state.page === 'habits') return renderHabits();
             if (state.page === 'alarms') return renderAlarms();
             if (state.page === 'settings') return renderSettings();
             return '';
@@ -2059,14 +2517,12 @@
 
         // ---------- СТРАНИЦА "СЕГОДНЯ" ----------
         function renderToday() {
-            const now = new Date(),
-                h = now.getHours();
+            const now = new Date(), h = now.getHours();
             const gr = h < 6 ? 'Доброй ночи' : h < 12 ? 'Доброе утро' : h < 18 ? 'Добрый день' : 'Добрый вечер';
-            const emIcon = h < 6 ? ICONS.moon : h < 12 ? ICONS.sunrise : h < 18 ? ICONS.cloudSun : ICONS.moon;
+            const grIconName = h < 6 ? 'wNight' : h < 12 ? 'sunrise' : h < 18 ? 'cloudSun' : 'wNight';
             const ds = now.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
             const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-            const total = state.tasks.length,
-                done = state.tasks.filter(t => t.done).length;
+            const total = state.tasks.length, done = state.tasks.filter(t => t.done).length;
             const pct = total ? Math.round(done / total * 100) : 0;
             const todayEvs = state.events.filter(ev => {
                 const d = new Date(ev.startDate);
@@ -2078,11 +2534,49 @@
             });
             const nextAlarm = state.alarms.filter(a => a.on).sort((a, b) => a.time.localeCompare(b.time))[0];
 
+            // Task filter
+            const filter = state.taskFilter || 'all';
+            const sortedTasks = [...state.tasks].sort((a, b) => {
+                const pv = { high: 0, medium: 1, none: 2, undefined: 2 };
+                return (pv[a.priority] ?? 2) - (pv[b.priority] ?? 2);
+            });
+            const filteredTasks = sortedTasks.filter(t => {
+                if (filter === 'high') return t.priority === 'high' && !t.done;
+                if (filter === 'medium') return t.priority === 'medium' && !t.done;
+                if (filter === 'done') return t.done;
+                return true;
+            });
+
+            function taskRow(t) {
+                const p = t.priority || 'none';
+                return `<div class="task-item${t.done ? ' done' : ''}${p === 'high' ? ' priority-high' : p === 'medium' ? ' priority-medium' : ''}">
+                    <div class="task-checkbox${t.done ? ' checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? icon('check') : ''}</div>
+                    <span class="task-text">${esc(t.text)}</span>
+                    <button class="priority-btn${p === 'high' ? ' high' : p === 'medium' ? ' medium' : ''}" onclick="cycleTaskPriority('${t.id}')" title="Приоритет">${icon('flag')}</button>
+                    <button class="btn-icon edit" onclick="openEditTask('${t.id}')">${icon('edit')}</button>
+                    <button class="btn-icon danger" onclick="deleteTask('${t.id}')">${icon('trash')}</button>
+                </div>`;
+            }
+
+            const filters = [
+                { id: 'all', label: 'Все' },
+                { id: 'high', label: '🔴 Срочные' },
+                { id: 'medium', label: '🟡 Важные' },
+                { id: 'done', label: '✓ Выполненные' },
+            ];
+
             return `<div style="padding:0 0 8px">
                 <div class="greeting-card">
-                    <div class="greeting-text">${icon(emIcon === ICONS.moon ? 'moon' : emIcon === ICONS.sunrise ? 'sunrise' : 'cloudSun','greeting-icon')} ${gr}</div>
-                    <div class="greeting-name">${state.userName ? esc(state.userName) : ''}</div>
-                    <div class="greeting-date">${cap(ds)}</div>
+                    <div class="greeting-top">
+                        <div class="greeting-left">
+                            <div class="greeting-text">${icon(grIconName, 'greeting-icon')} ${gr}</div>
+                            <div class="greeting-name">${state.userName ? esc(state.userName) : ''}</div>
+                            <div class="greeting-date">${cap(ds)}</div>
+                        </div>
+                        <div class="weather-widget" id="weatherWidget" onclick="fetchWeather()" title="Обновить погоду">
+                            ${renderWeatherWidgetContent()}
+                        </div>
+                    </div>
                 </div>
                 <div class="stat-row">
                     <div class="stat-card"><div class="stat-num" id="statDoneNum">${done}/${total}</div><div class="stat-label">Задач выполнено</div></div>
@@ -2101,13 +2595,11 @@
                 </div>` : ''}
                 <div class="card" style="padding:16px;margin-bottom:14px">
                     <div class="section-header"><span class="section-title">Задачи</span><span class="badge" id="taskTotalBadge">${total}</span></div>
+                    <div class="task-filter-row">
+                        ${filters.map(f => `<div class="task-filter-pill${filter === f.id ? ' active' : ''}" onclick="setTaskFilter('${f.id}')">${f.label}</div>`).join('')}
+                    </div>
                     <div class="space-y-2" id="taskListContainer">
-                        ${state.tasks.map(t => `<div class="task-item${t.done ? ' done' : ''}">
-                            <div class="task-checkbox${t.done ? ' checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? icon('check') : ''}</div>
-                            <span class="task-text">${esc(t.text)}</span>
-                            <button class="btn-icon edit" onclick="openEditTask('${t.id}')">${icon('edit')}</button>
-                            <button class="btn-icon danger" onclick="deleteTask('${t.id}')">${icon('trash')}</button>
-                        </div>`).join('') || `<div class="empty-state">${icon('emptyCheck')}<div>Нет задач. Добавьте первую!</div></div>`}
+                        ${filteredTasks.map(taskRow).join('') || `<div class="empty-state">${icon('emptyCheck')}<div>${filter === 'all' ? 'Нет задач. Добавьте первую!' : 'Нет задач в этой категории'}</div></div>`}
                     </div>
                     <div class="add-row mt-3">
                         <input type="text" id="newTask" placeholder="Добавить задачу..." onkeydown="if(event.key==='Enter')addTask()">
@@ -2128,10 +2620,8 @@
             </div>`;
         }
 
-        // ---------- СТРАНИЦА "ПЛАНЕР" ----------
         function renderPlanner() {
-            const year = state.calYear,
-                month = state.calMonth;
+            const year = state.calYear, month = state.calMonth;
             const mn = new Date(year, month, 1).toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
             const firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
             const dim = new Date(year, month + 1, 0).getDate();
@@ -2150,52 +2640,106 @@
                     if (ev.recurrence === 'yearly') return ed.getDate() === d && ed.getMonth() === month;
                     return ed.getDate() === d && ed.getMonth() === month && ed.getFullYear() === year;
                 });
-                const dots = evs.length ? `<div class="cal-dots">${evs.slice(0, 3).map(e => `<div class="cal-dot" style="background:${e.color}"></div>`).join('')}</div>` :
-                    '';
-                ch +=
-                    `<div class="cal-day${isTod ? ' today' : ''}${isWe && !isTod ? ' weekend' : ''}" onclick="openEventModal(${year},${month},${d})">${d}${dots}</div>`;
+                const dots = evs.length ? `<div class="cal-dots">${evs.slice(0,3).map(e=>`<div class="cal-dot" style="background:${e.color}"></div>`).join('')}</div>` : '';
+                ch += `<div class="cal-day${isTod?' today':''}${isWe&&!isTod?' weekend':''}" onclick="openEventModal(${year},${month},${d})">${d}${dots}</div>`;
             }
+
             const all = [
-                ...state.tasks.map(t => ({ type: 'task', name: t.text, id: t.id, date: '', done: t.done })),
-                ...state.events.map(e => ({ type: 'event', name: e.name, id: e.id, date: e.startDate, color: e.color,
-                    rec: e.recurrence }))
-            ].sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+                ...state.tasks.map(t => ({ type:'task', name:t.text, id:t.id, date:'', done:t.done, priority:t.priority })),
+                ...state.events.map(e => ({ type:'event', name:e.name, id:e.id, date:e.startDate, color:e.color, rec:e.recurrence, evTime:e.evTime }))
+            ].sort((a,b) => (a.date||'9999').localeCompare(b.date||'9999'));
+
+            // Timeline — события сегодня по часам
+            const todayEvs = state.events.filter(ev => {
+                const d = new Date(ev.startDate);
+                if (ev.recurrence === 'daily') return true;
+                if (ev.recurrence === 'weekly') return d.getDay() === today.getDay();
+                if (ev.recurrence === 'monthly') return d.getDate() === today.getDate();
+                if (ev.recurrence === 'yearly') return d.getDate()===today.getDate() && d.getMonth()===today.getMonth();
+                return d.toDateString() === today.toDateString();
+            }).filter(ev => ev.evTime);
+
+            const nowMin = today.getHours() * 60 + today.getMinutes();
+
+            function timelineRow(hr) {
+                const label = `${String(hr).padStart(2,'0')}:00`;
+                const rowMin = hr * 60;
+                const evHere = todayEvs.filter(ev => {
+                    const [eh, em] = ev.evTime.split(':').map(Number);
+                    return eh === hr;
+                });
+                const isNowHour = today.getHours() === hr;
+                const nowPct = isNowHour ? ((today.getMinutes() / 60) * 100).toFixed(1) : null;
+                return `<div class="timeline-row">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-hour">${label}</div>
+                    <div class="timeline-events">
+                        ${isNowHour ? `<div class="timeline-now" style="top:${nowPct}%"></div>` : ''}
+                        ${evHere.map(ev => `<div class="timeline-event" style="background:${ev.color}">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                            ${ev.evTime} ${esc(ev.name)}
+                        </div>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            const hours = Array.from({length: 17}, (_, i) => i + 7); // 07–23
+            const view = state.plannerView || 'list';
 
             return `<div style="padding:0 0 8px">
                 <div class="page-header"><h1>Планер</h1><p>Управляй своим расписанием</p></div>
                 <div class="card" style="margin-bottom:14px">
                     <div class="cal-header">
                         <button class="cal-nav" onclick="prevMonth()">${icon('chevronL')}</button>
-                        <span class="cal-month">${mn.charAt(0).toUpperCase() + mn.slice(1)}</span>
+                        <span class="cal-month">${mn.charAt(0).toUpperCase()+mn.slice(1)}</span>
                         <button class="cal-nav" onclick="nextMonth()">${icon('chevronR')}</button>
                     </div>
                     <div style="padding:0 12px">
                         <div class="cal-grid">
-                            ${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(d => `<div class="cal-dow">${d}</div>`).join('')}
+                            ${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(d=>`<div class="cal-dow">${d}</div>`).join('')}
                             ${ch}
                         </div>
                     </div>
                     <div style="padding:10px 16px 14px;display:flex;gap:14px;font-size:11px;color:var(--text2);align-items:center">
                         <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block"></span> Выходные</span>
                         <span style="background:var(--accent);color:white;border-radius:4px;padding:1px 6px">Сегодня</span>
-                        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block"></span> Событие</span>
+                        <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span> Событие</span>
                     </div>
                 </div>
                 <button class="add-btn-dashed" style="margin-bottom:14px" onclick="openEventModalToday()">
                     ${icon('plus')} Новое событие
                 </button>
                 <div class="card" style="padding:16px;margin-bottom:14px">
-                    <div class="section-header mb-3"><span class="section-title">Все задачи и события</span><span class="badge">${all.length}</span></div>
-                    <div class="space-y-2">${all.length ? all.map(item => `<div class="event-item">
-                        ${item.type === 'event' ? `<div class="event-dot" style="background:${item.color}"></div>` : `<div class="task-checkbox${item.done ? ' checked' : ''}" style="cursor:default">${item.done ? icon('check') : ''}</div>`}
-                        <div style="flex:1">
-                            <div class="event-name${item.done ? ' text-muted' : ''}" style="${item.done ? 'text-decoration:line-through' : ''}">${esc(item.name)}</div>
-                            ${item.date ? `<div class="event-date">${new Date(item.date).toLocaleDateString('ru-RU')}</div>` : ''}
-                            ${item.rec && item.rec !== 'none' ? `<span class="event-rec">${REC_LABELS[item.rec]}</span>` : ''}
+                    <div class="tl-tab-row">
+                        <div class="tl-tab${view==='list'?' active':''}" onclick="setPlannerView('list')">Список</div>
+                        <div class="tl-tab${view==='timeline'?' active':''}" onclick="setPlannerView('timeline')">
+                            Шкала дня
                         </div>
-                        ${item.type === 'task' ? `<button class="btn-icon edit" onclick="openEditTask('${item.id}')">${icon('edit')}</button>` : ''}
-                        ${item.type === 'event' ? `<button class="btn-icon danger" onclick="deleteEvent('${item.id}')">${icon('trash')}</button>` : `<button class="btn-icon danger" onclick="deleteTask('${item.id}')">${icon('trash')}</button>`}
-                    </div>`).join('') : `<div class="empty-state">${icon('emptyCal')}<div>Нет задач и событий</div></div>`}</div>
+                    </div>
+                    ${view === 'timeline' ? `
+                        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">
+                            ${today.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'})}
+                        </div>
+                        <div class="timeline-wrap">
+                            ${todayEvs.length === 0 ? `<div class="empty-state" style="padding:20px 0">${icon('emptyCal')}<div>Нет событий на сегодня<br><span style="font-size:12px">Добавьте время к событию в Планере</span></div></div>` :
+                            hours.map(timelineRow).join('')}
+                        </div>
+                    ` : `
+                        <div class="section-header mb-3"><span class="section-title">Все задачи и события</span><span class="badge">${all.length}</span></div>
+                        <div class="space-y-2">${all.length ? all.map(item => `<div class="event-item">
+                            ${item.type==='event' ? `<div class="event-dot" style="background:${item.color}"></div>` :
+                            `<div class="task-checkbox${item.done?' checked':''}" style="cursor:default">${item.done?icon('check'):''}</div>`}
+                            <div style="flex:1">
+                                <div class="event-name${item.done?' text-muted':''}" style="${item.done?'text-decoration:line-through':''}">${esc(item.name)}</div>
+                                ${item.date?`<div class="event-date">${new Date(item.date).toLocaleDateString('ru-RU')}</div>`:''}
+                                ${item.rec&&item.rec!=='none'?`<span class="event-rec">${REC_LABELS[item.rec]}</span>`:''}
+                                ${item.type==='task'&&item.priority==='high'?`<span class="event-rec" style="background:rgba(239,68,68,.1);color:#ef4444">Срочно</span>`:''}
+                                ${item.type==='task'&&item.priority==='medium'?`<span class="event-rec" style="background:rgba(245,158,11,.1);color:#f59e0b">Важно</span>`:''}
+                            </div>
+                            ${item.type==='task'?`<button class="btn-icon edit" onclick="openEditTask('${item.id}')">${icon('edit')}</button>`:''}
+                            ${item.type==='event'?`<button class="btn-icon danger" onclick="deleteEvent('${item.id}')">${icon('trash')}</button>`:`<button class="btn-icon danger" onclick="deleteTask('${item.id}')">${icon('trash')}</button>`}
+                        </div>`).join('') : `<div class="empty-state">${icon('emptyCal')}<div>Нет задач и событий</div></div>`}</div>
+                    `}
                 </div>
             </div>`;
         }
@@ -2292,6 +2836,14 @@
                 </div>
 
                 <div class="card" style="padding:16px;margin-bottom:14px">
+                    <div class="settings-section-title" style="margin-bottom:4px">Интерфейс</div>
+                    <div class="setting-row">
+                        <div><div class="setting-label">Кнопка быстрого добавления</div><div class="setting-desc">Кнопка «+» над навигацией</div></div>
+                        <button class="toggle${state.quickAddEnabled ? ' on' : ''}" onclick="toggleQuickAdd()"></button>
+                    </div>
+                </div>
+
+                <div class="card" style="padding:16px;margin-bottom:14px">
                     <div class="settings-section-title" style="margin-bottom:4px">Статистика</div>
                     <div class="setting-row"><div class="setting-label">Задач создано</div><span class="badge">${state.tasks.length}</span></div>
                     <div class="setting-row"><div class="setting-label">Событий создано</div><span class="badge">${state.events.length}</span></div>
@@ -2308,6 +2860,10 @@
 
                 <div class="card" style="padding:16px;margin-bottom:14px">
                     <div class="settings-section-title" style="margin-bottom:4px">Резервная копия</div>
+                    <div class="setting-row">
+                        <div><div class="setting-label">Экспорт в календарь</div><div class="setting-desc">Скачать события как .ics файл</div></div>
+                        <button class="btn btn-ghost" onclick="exportICS()" style="font-size:13px;padding:8px 12px;display:flex;align-items:center;gap:6px">${icon('calendar')} .ics</button>
+                    </div>
                     <div class="setting-row">
                         <div><div class="setting-label">Сохранить бэкап</div><div class="setting-desc">Скачать все данные в файл</div></div>
                         <button class="btn btn-ghost" onclick="exportBackup()" style="font-size:13px;padding:8px 12px;display:flex;align-items:center;gap:6px">${icon('download')} Скачать</button>
@@ -2344,6 +2900,25 @@
         // 11. РАБОТА С ЗАДАЧАМИ
         // ============================================================
         let _editingTaskId = null;
+
+        function cycleTaskPriority(id) {
+            const t = state.tasks.find(t => t.id === id);
+            if (!t) return;
+            const cycle = { none: 'high', high: 'medium', medium: 'none', undefined: 'high' };
+            t.priority = cycle[t.priority || 'none'];
+            save();
+            updateTaskListUI();
+        }
+
+        function setTaskFilter(f) {
+            state.taskFilter = f;
+            render();
+        }
+
+        function setPlannerView(v) {
+            state.plannerView = v;
+            render();
+        }
 
         function toggleTask(id) {
             const t = state.tasks.find(t => t.id === id);
@@ -2419,16 +2994,36 @@
             const statDone = document.getElementById('statDoneNum');
             if (!container) { render(); return; }
 
-            container.innerHTML = state.tasks.map(t => `
-                <div class="task-item${t.done ? ' done' : ''}">
-                    <div class="task-checkbox${t.done ? ' checked' : ''}" onclick="toggleTask('${t.id}')">${t.done ? icon('check') : ''}</div>
+            const filter = state.taskFilter || 'all';
+            const sortedTasks = [...state.tasks].sort((a, b) => {
+                const pv = { high: 0, medium: 1, none: 2, undefined: 2 };
+                return (pv[a.priority] ?? 2) - (pv[b.priority] ?? 2);
+            });
+            const filteredTasks = sortedTasks.filter(t => {
+                if (filter === 'high') return t.priority === 'high' && !t.done;
+                if (filter === 'medium') return t.priority === 'medium' && !t.done;
+                if (filter === 'done') return t.done;
+                return true;
+            });
+
+            container.innerHTML = filteredTasks.map(t => {
+                const p = t.priority || 'none';
+                const repeatBtn = t.done
+                    ? `<button class="repeat-task-btn" onclick="repeatTask('${t.id}')" title="Повторить задачу">
+                        <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+                        Повтор
+                       </button>` : '';
+                return `<div class="task-item${t.done?' done':''}${p==='high'?' priority-high':p==='medium'?' priority-medium':''}">
+                    <div class="task-checkbox${t.done?' checked':''}" onclick="toggleTask('${t.id}')">${t.done?icon('check'):''}</div>
                     <span class="task-text">${esc(t.text)}</span>
+                    ${repeatBtn}
+                    <button class="priority-btn${p==='high'?' high':p==='medium'?' medium':''}" onclick="cycleTaskPriority('${t.id}')">${icon('flag')}</button>
                     <button class="btn-icon edit" onclick="openEditTask('${t.id}')">${icon('edit')}</button>
                     <button class="btn-icon danger" onclick="deleteTask('${t.id}')">${icon('trash')}</button>
-                </div>`).join('') || `<div class="empty-state">${icon('emptyCheck')}<div>Нет задач. Добавьте первую!</div></div>`;
+                </div>`;
+            }).join('') || `<div class="empty-state">${icon('emptyCheck')}<div>${filter==='all'?'Нет задач. Добавьте первую!':'Нет задач в этой категории'}</div></div>`;
 
-            const total = state.tasks.length,
-                done = state.tasks.filter(t => t.done).length;
+            const total = state.tasks.length, done = state.tasks.filter(t => t.done).length;
             const pct = total ? Math.round(done / total * 100) : 0;
             if (totalBadge) totalBadge.textContent = total;
             if (progressFill) progressFill.style.width = pct + '%';
@@ -2471,11 +3066,13 @@
         function openEventModal(year, month, day) {
             const ds = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             state.pendingEventDate = ds;
+            state._pendingReminderMin = 0;
             document.getElementById('evDate').value = ds;
             document.getElementById('evName').value = '';
             document.getElementById('evRec').value = 'none';
             state.evColor = '#4f6ef7';
             buildColorPicker();
+            buildReminderPills();
             document.getElementById('eventModal').classList.add('open');
             document.getElementById('modalTitle').textContent = `${day} ${new Date(year, month, day).toLocaleString('ru-RU', { month: 'long' })}`;
         }
@@ -2501,9 +3098,10 @@
             let date = document.getElementById('evDate').value || state.pendingEventDate;
             const rec = document.getElementById('evRec').value;
             const evTime = document.getElementById('evTime').value;
+            const reminderMin = state._pendingReminderMin ?? 0;
             if (!name) { toast('Введите название события'); return; }
             if (!date) { toast('Пожалуйста, выберите дату'); return; }
-            state.events.push({ id: genId(), name, startDate: date, evTime, recurrence: rec, color: state.evColor });
+            state.events.push({ id: genId(), name, startDate: date, evTime, recurrence: rec, color: state.evColor, reminderMin });
             save();
             closeModal();
             render();
@@ -2871,23 +3469,390 @@
             if (!_modalBound) {
                 document.getElementById('modalCancel')?.addEventListener('click', closeModal);
                 document.getElementById('modalSave')?.addEventListener('click', saveEvent);
-                document.getElementById('eventModal')?.addEventListener('click', e => { if (e.target.classList.contains(
-                        'modal-overlay')) closeModal(); });
-                document.getElementById('confirmModal')?.addEventListener('click', e => { if (e.target.classList.contains(
-                        'modal-overlay')) closeConfirm(); });
-                document.getElementById('editTaskModal')?.addEventListener('click', e => { if (e.target.classList.contains(
-                        'modal-overlay')) closeEditTask(); });
-                document.getElementById('alarmModal')?.addEventListener('click', e => { if (e.target.classList.contains(
-                        'modal-overlay')) closeAlarmModal(); });
+                document.getElementById('eventModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeModal(); });
+                document.getElementById('confirmModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeConfirm(); });
+                document.getElementById('editTaskModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeEditTask(); });
+                document.getElementById('alarmModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeAlarmModal(); });
                 document.getElementById('alarmModalCancel')?.addEventListener('click', closeAlarmModal);
                 document.getElementById('alarmModalSave')?.addEventListener('click', saveAlarmFromModal);
-                document.getElementById('evDate')?.addEventListener('change', e => { state.pendingEventDate = e.target
-                        .value; });
-                document.getElementById('editTaskInput')?.addEventListener('keydown', e => { if (e.key === 'Enter')
-                        saveEditTask(); });
+                document.getElementById('quickAddModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeQuickAdd(); });
+                document.getElementById('habitModal')?.addEventListener('click', e => { if (e.target.classList.contains('modal-overlay')) closeHabitModal(); });
+                document.getElementById('evDate')?.addEventListener('change', e => { state.pendingEventDate = e.target.value; });
+                document.getElementById('editTaskInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') saveEditTask(); });
                 _modalBound = true;
             }
             buildColorPicker();
+            buildReminderPills();
+        }
+
+        // ============================================================
+        // 21. ПРИВЫЧКИ
+        // ============================================================
+        const HABIT_COLORS = ['#4f6ef7','#7c3aed','#ef4444','#f97316','#22c55e','#eab308','#ec4899','#0d8a7c'];
+        let _editingHabitId = null;
+        let _habitColor = '#4f6ef7';
+
+        function todayKey() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+
+        function habitDoneToday(h) { return h.history && h.history.includes(todayKey()); }
+
+        function calcStreak(h) {
+            if (!h.history || !h.history.length) return 0;
+            const sorted = [...h.history].sort().reverse();
+            let streak = 0, d = new Date();
+            for (let i = 0; i < 365; i++) {
+                const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                if (sorted.includes(key)) { streak++; d.setDate(d.getDate()-1); }
+                else if (i === 0) { d.setDate(d.getDate()-1); } // сегодня можно пропустить
+                else break;
+            }
+            return streak;
+        }
+
+        function getLast7(h) {
+            const days = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(); d.setDate(d.getDate() - i);
+                const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                days.push({ key, isToday: i === 0, done: h.history && h.history.includes(key) });
+            }
+            return days;
+        }
+
+        function renderHabits() {
+            const done = state.habits.filter(habitDoneToday).length;
+            return `<div style="padding:0 0 8px">
+                <div class="page-header"><h1>Привычки</h1><p>${done} из ${state.habits.length} выполнено сегодня</p></div>
+                <div class="space-y-2 mb-3">
+                ${state.habits.length ? state.habits.map(h => {
+                    const doneT = habitDoneToday(h);
+                    const streak = calcStreak(h);
+                    const last7 = getLast7(h);
+                    return `<div class="habit-card${doneT?' done-today':''}">
+                        <div class="habit-emoji">${esc(h.emoji||'⭐')}</div>
+                        <div class="habit-info">
+                            <div class="habit-name">${esc(h.name)}</div>
+                            <div class="habit-streak">
+                                <span style="color:${h.color||'var(--accent)'}">🔥</span>
+                                <span class="habit-streak-num">${streak}</span> дней подряд
+                            </div>
+                            <div class="habit-week">${last7.map(d =>
+                                `<div class="habit-day-dot${d.done?' done':''}${d.isToday?' today':''}"></div>`
+                            ).join('')}</div>
+                        </div>
+                        <div style="display:flex;gap:6px;align-items:center">
+                            <button class="btn-icon edit" onclick="openHabitModal('${h.id}')">${icon('edit')}</button>
+                            <button class="btn-icon danger" onclick="deleteHabit('${h.id}')">${icon('trash')}</button>
+                            <div class="habit-check${doneT?' done':''}" onclick="toggleHabit('${h.id}')">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('') : `<div class="empty-state">${icon('sparkle')}<div>Нет привычек. Добавьте первую!</div></div>`}
+                </div>
+                <button class="add-btn-dashed" onclick="openHabitModal(null)">
+                    ${icon('plus')} Новая привычка
+                </button>
+            </div>`;
+        }
+
+        function toggleHabit(id) {
+            const h = state.habits.find(x => x.id === id);
+            if (!h) return;
+            if (!h.history) h.history = [];
+            const key = todayKey();
+            if (h.history.includes(key)) {
+                h.history = h.history.filter(k => k !== key);
+                toast('Отмечено как невыполненное');
+            } else {
+                h.history.push(key);
+                const s = calcStreak(h);
+                toast(s > 1 ? `🔥 ${s} дней подряд!` : 'Выполнено!');
+            }
+            save(); render();
+        }
+
+        function openHabitModal(id) {
+            _editingHabitId = id;
+            const h = id ? state.habits.find(x => x.id === id) : null;
+            _habitColor = h ? (h.color || '#4f6ef7') : '#4f6ef7';
+            document.getElementById('habitModalTitle').textContent = id ? 'Изменить привычку' : 'Новая привычка';
+            document.getElementById('habitEmoji').value = h ? (h.emoji || '') : '';
+            document.getElementById('habitName').value = h ? h.name : '';
+            buildHabitColorPicker();
+            document.getElementById('habitModal').classList.add('open');
+        }
+
+        function buildHabitColorPicker() {
+            const c = document.getElementById('habitColors');
+            if (c) c.innerHTML = HABIT_COLORS.map(col =>
+                `<div class="swatch${_habitColor===col?' sel':''}" style="background:${col};border-radius:50%" onclick="pickHabitColor('${col}')"></div>`
+            ).join('');
+        }
+
+        function pickHabitColor(col) { _habitColor = col; buildHabitColorPicker(); }
+
+        function closeHabitModal() {
+            document.getElementById('habitModal').classList.remove('open');
+            _editingHabitId = null;
+        }
+
+        function saveHabit() {
+            const name = document.getElementById('habitName').value.trim();
+            const emoji = document.getElementById('habitEmoji').value.trim() || '⭐';
+            if (!name) { toast('Введите название'); return; }
+            if (_editingHabitId) {
+                const h = state.habits.find(x => x.id === _editingHabitId);
+                if (h) { h.name = name; h.emoji = emoji; h.color = _habitColor; }
+            } else {
+                state.habits.push({ id: genId(), name, emoji, color: _habitColor, history: [] });
+            }
+            save(); closeHabitModal(); render();
+            toast(_editingHabitId ? 'Привычка изменена' : 'Привычка добавлена', icon('check'));
+        }
+
+        function deleteHabit(id) {
+            const h = state.habits.find(x => x.id === id);
+            askConfirm(`Удалить привычку «${h ? h.name : ''}»? История выполнений будет потеряна.`, () => {
+                state.habits = state.habits.filter(x => x.id !== id);
+                save(); render(); toast('Привычка удалена', icon('trash'));
+            });
+        }
+
+        // ============================================================
+        // 22. БЫСТРОЕ ДОБАВЛЕНИЕ (FAB)
+        // ============================================================
+        let _qaMode = null;
+
+        function openQuickAdd() {
+            _qaMode = null;
+            document.getElementById('quickAddContent').innerHTML = `
+                <div class="quick-add-grid">
+                    <button class="quick-add-tile" onclick="quickAddShow('task')">
+                        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                        Задача
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('event')">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        Событие
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('alarm')">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2M19 3l2 2"/></svg>
+                        Будильник
+                    </button>
+                    <button class="quick-add-tile" onclick="quickAddShow('habit')">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4.5 8-11.8A8 8 0 004 10c0 7.3 8 12 8 12z"/></svg>
+                        Привычка
+                    </button>
+                </div>`;
+            document.getElementById('quickAddModal').classList.add('open');
+        }
+
+        function closeQuickAdd() {
+            document.getElementById('quickAddModal').classList.remove('open');
+            _qaMode = null;
+        }
+
+        function quickAddShow(type) {
+            _qaMode = type;
+            const wrap = document.getElementById('quickAddContent');
+            if (type === 'task') {
+                wrap.innerHTML = `<div class="quick-add-inline">
+                    <input type="text" id="qaTaskInput" placeholder="Текст задачи..." onkeydown="if(event.key==='Enter')qaAddTask()">
+                    <div class="flex gap-3">
+                        <button class="btn btn-ghost w-full" onclick="openQuickAdd()">← Назад</button>
+                        <button class="btn btn-primary w-full" onclick="qaAddTask()">Добавить</button>
+                    </div></div>`;
+                setTimeout(() => document.getElementById('qaTaskInput')?.focus(), 80);
+            } else if (type === 'event') {
+                const now = new Date();
+                const ds = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+                wrap.innerHTML = `<div class="quick-add-inline">
+                    <input type="text" id="qaEvName" placeholder="Название события">
+                    <div class="grid-2">
+                        <input type="date" id="qaEvDate" value="${ds}">
+                        <input type="time" id="qaEvTime" value="10:00">
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn btn-ghost w-full" onclick="openQuickAdd()">← Назад</button>
+                        <button class="btn btn-primary w-full" onclick="qaAddEvent()">Добавить</button>
+                    </div></div>`;
+                setTimeout(() => document.getElementById('qaEvName')?.focus(), 80);
+            } else if (type === 'alarm') {
+                wrap.innerHTML = `<div class="quick-add-inline">
+                    <input type="time" id="qaAlTime" value="07:00" style="font-size:32px;text-align:center">
+                    <input type="text" id="qaAlLabel" placeholder="Название будильника">
+                    <div class="flex gap-3">
+                        <button class="btn btn-ghost w-full" onclick="openQuickAdd()">← Назад</button>
+                        <button class="btn btn-primary w-full" onclick="qaAddAlarm()">Добавить</button>
+                    </div></div>`;
+            } else if (type === 'habit') {
+                wrap.innerHTML = `<div class="quick-add-inline">
+                    <div class="flex gap-3">
+                        <input type="text" id="qaHabitEmoji" placeholder="⭐" style="width:64px;text-align:center;font-size:22px">
+                        <input type="text" id="qaHabitName" placeholder="Название привычки" style="flex:1">
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="btn btn-ghost w-full" onclick="openQuickAdd()">← Назад</button>
+                        <button class="btn btn-primary w-full" onclick="qaAddHabit()">Добавить</button>
+                    </div></div>`;
+                setTimeout(() => document.getElementById('qaHabitName')?.focus(), 80);
+            }
+        }
+
+        function qaAddTask() {
+            const v = document.getElementById('qaTaskInput')?.value.trim();
+            if (!v) { toast('Введите текст задачи'); return; }
+            state.tasks.push({ id: genId(), text: v, done: false });
+            save(); closeQuickAdd();
+            if (state.page === 'today') updateTaskListUI();
+            toast('Задача добавлена', icon('check'));
+        }
+
+        function qaAddEvent() {
+            const name = document.getElementById('qaEvName')?.value.trim();
+            const date = document.getElementById('qaEvDate')?.value;
+            const time = document.getElementById('qaEvTime')?.value;
+            if (!name) { toast('Введите название'); return; }
+            state.events.push({ id: genId(), name, startDate: date, evTime: time, recurrence: 'none', color: '#4f6ef7', reminderMin: 0 });
+            save(); closeQuickAdd();
+            if (state.page === 'planner' || state.page === 'today') render();
+            toast('Событие добавлено', icon('calendar'));
+        }
+
+        function qaAddAlarm() {
+            const time = document.getElementById('qaAlTime')?.value || '07:00';
+            const label = document.getElementById('qaAlLabel')?.value.trim() || 'Будильник';
+            state.alarms.push({ id: genId(), time, label, vibration: true, days: [0,1,2,3,4,5,6], sound: {type:'builtin',id:'classic'}, on: true });
+            save(); closeQuickAdd();
+            if (state.page === 'alarms') render();
+            toast('Будильник добавлен', icon('bell'));
+        }
+
+        function qaAddHabit() {
+            const name = document.getElementById('qaHabitName')?.value.trim();
+            const emoji = document.getElementById('qaHabitEmoji')?.value.trim() || '⭐';
+            if (!name) { toast('Введите название'); return; }
+            state.habits.push({ id: genId(), name, emoji, color: '#4f6ef7', history: [] });
+            save(); closeQuickAdd();
+            if (state.page === 'habits') render();
+            toast('Привычка добавлена', icon('check'));
+        }
+
+        function toggleQuickAdd() {
+            state.quickAddEnabled = !state.quickAddEnabled;
+            save(); render();
+        }
+
+        // ============================================================
+        // 23. ПОВТОР ЗАДАЧИ
+        // ============================================================
+        function repeatTask(id) {
+            const t = state.tasks.find(t => t.id === id);
+            if (!t) return;
+            state.tasks.push({ id: genId(), text: t.text, done: false, priority: t.priority });
+            save(); updateTaskListUI();
+            toast('Задача повторена', icon('repeat'));
+        }
+
+        // ============================================================
+        // 24. НАПОМИНАНИЯ О СОБЫТИЯХ
+        // ============================================================
+        const REMINDER_OPTIONS = [
+            { min: 0,  label: 'Нет' },
+            { min: 5,  label: '5 мин' },
+            { min: 10, label: '10 мин' },
+            { min: 15, label: '15 мин' },
+            { min: 30, label: '30 мин' },
+            { min: 60, label: '1 час' },
+            { min: 1440, label: 'За день' },
+        ];
+
+        function buildReminderPills() {
+            const wrap = document.getElementById('evReminderPills');
+            if (!wrap) return;
+            const cur = state._pendingReminderMin ?? 0;
+            wrap.innerHTML = REMINDER_OPTIONS.map(o =>
+                `<div class="reminder-pill${cur===o.min?' active':''}" onclick="pickReminder(${o.min})">${o.label}</div>`
+            ).join('');
+        }
+
+        function pickReminder(min) {
+            state._pendingReminderMin = min;
+            buildReminderPills();
+        }
+
+        function checkEventReminders() {
+            const now = new Date();
+            const nowTs = now.getTime();
+            state.events.forEach(ev => {
+                if (!ev.reminderMin || ev.reminderMin <= 0) return;
+                if (!ev.startDate || !ev.evTime) return;
+                const evTs = new Date(`${ev.startDate}T${ev.evTime}`).getTime();
+                const diff = (evTs - nowTs) / 60000; // minutes until event
+                if (diff > 0 && diff <= ev.reminderMin) {
+                    const fireKey = `evrem-${ev.id}-${ev.reminderMin}`;
+                    if (ev._lastRemFired === fireKey) return;
+                    ev._lastRemFired = fireKey;
+                    const msg = `${ev.name} — через ${Math.round(diff)} мин`;
+                    toast(msg, icon('calendar'));
+                    if (Notification.permission === 'granted') {
+                        try { new Notification('Напоминание о событии', { body: msg, tag: fireKey }); } catch(e) {}
+                    }
+                }
+            });
+        }
+
+        // ============================================================
+        // 25. ЭКСПОРТ В .ICS
+        // ============================================================
+        function exportICS() {
+            if (!state.events.length) { toast('Нет событий для экспорта'); return; }
+            const pad = n => String(n).padStart(2,'0');
+            function toICSDate(dateStr, timeStr) {
+                const d = new Date(`${dateStr}T${timeStr || '00:00'}`);
+                return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}` +
+                    (timeStr ? `T${pad(d.getHours())}${pad(d.getMinutes())}00` : '');
+            }
+            const REC_ICS = { daily:'DAILY', weekly:'WEEKLY', monthly:'MONTHLY', yearly:'YEARLY' };
+            const lines = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//FlowDay//FlowDay App//RU',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+            ];
+            state.events.forEach(ev => {
+                const dtstart = toICSDate(ev.startDate, ev.evTime);
+                const uid = `${ev.id}@flowday`;
+                lines.push('BEGIN:VEVENT');
+                lines.push(`UID:${uid}`);
+                lines.push(`DTSTAMP:${toICSDate(new Date().toISOString().slice(0,10), new Date().toTimeString().slice(0,5))}`);
+                lines.push(`DTSTART${ev.evTime ? '' : ';VALUE=DATE'}:${dtstart}`);
+                lines.push(`SUMMARY:${ev.name}`);
+                if (ev.recurrence && ev.recurrence !== 'none' && REC_ICS[ev.recurrence]) {
+                    lines.push(`RRULE:FREQ=${REC_ICS[ev.recurrence]}`);
+                }
+                if (ev.reminderMin && ev.reminderMin > 0) {
+                    lines.push('BEGIN:VALARM');
+                    lines.push('TRIGGER:-PT' + ev.reminderMin + 'M');
+                    lines.push('ACTION:DISPLAY');
+                    lines.push(`DESCRIPTION:${ev.name}`);
+                    lines.push('END:VALARM');
+                }
+                lines.push('END:VEVENT');
+            });
+            lines.push('END:VCALENDAR');
+            const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'flowday-events.ics';
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a); URL.revokeObjectURL(url);
+            toast('Экспортировано в .ics', icon('calendar'));
         }
 
         // ============================================================
@@ -2895,9 +3860,12 @@
         // ============================================================
         load();
         goTo('today');
+        fetchWeather();
+        // Обновляем погоду раз в 30 минут
+        setInterval(fetchWeather, 30 * 60 * 1000);
 
         // Проверка будильников каждую секунду (для точного срабатывания и отложенных будильников)
-        setInterval(checkAlarms, 1000);
+        setInterval(() => { checkAlarms(); checkEventReminders(); }, 1000);
         if (Notification.permission === 'default') Notification.requestPermission();
 
         // Звук по умолчанию заблокирован браузером до первого взаимодействия —
